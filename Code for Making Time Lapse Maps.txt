@@ -1,0 +1,59 @@
+setwd("C:/Documents and Settings/bhoung/My Documents/time/")
+require("ggplot2")
+require("maptools")
+gpclibPermit()
+ 
+# read in spatial data - from the ABS (Australian Burea of Statistics) website
+ 
+shp <- readShapeSpatial( fn = "C:/Documents and Settings/bhoung/My Documents/asgc/SLA11aAust", verbose = TRUE, delete_null_obj=TRUE)
+summary(shp)
+list_names = names(shp)
+shp$melb = substr(shp$SLA_CODE11, start=1, stop=3)
+ 
+# create a subset of the spatial data, take only the state Victoria
+vic <- shp[which(shp$STATE_CODE==2),]
+ 
+# create a subset of the spatial data, take only the city Melbourne
+melb = shp[which(shp$melb=="205"),]
+ 
+# fortify data, so that ggplot can map it.
+u <- unique(melb$SLA_CODE11)      
+out <- fortify.SpatialPolygonsDataFrame(shp[u,], region="SLA_CODE11")
+ 
+# read in unemployment Small Area Labour Market data from DEEWR 
+unemp <- read.csv("C:/Documents and Settings/bhoung/My Documents/Dropbox/business cycle/excel/unemployment0810.csv")
+ 
+# merge unemployment with spatial data
+m <- merge(melb, unemp,  by.x="SLA_5DIGIT", by.y="SLA.Code", all.x=TRUE)
+ 
+# merge fortifed spatial data with spatial data that now contains unemployment data
+m2 <- merge(out, m, by.x="id", by.y="SLA_CODE11", all.x=TRUE)
+names <- names(unemp)                     
+ 
+# counter
+j = 1
+ 
+for (n in 17:28) {
+ 
+     # create different categories/shadings of unemployment  
+     m2$rate <- cut(as.numeric(m2[,n]), breaks = c(seq(0, 12, by = 2)))
+ 
+     # choose colours
+     cbbPalette <- c("#E3D1E7","#D7B5D8","#DB8DC3","#DF65B0","#D63B83","#CE1256")
+ 
+     #ggplot code
+     map = ggplot(m2, aes(long, lat, group = group)) +
+     geom_polygon(aes(fill = rate), colour = alpha("white", 1/2), size = 0.2) +
+     scale_fill_manual(values=cbbPalette, name = "Unemployment\nRate") +
+     ylab("Latitude") +  xlab("Longitude")
+ 
+     #get the date of the unemployment data to use in labeling map
+ 
+     name <- names(m2)[n]
+     g1 <- map + coord_map() + opts(title = name)
+     ggsave(plot = g1, filename=paste('melb unemp', j, '.jpg', sep = ''), height = 5, width = 6)
+     j = j + 1
+ 
+}                
+ 
+#./ffmpeg -f image2 -r 5.5 -i /Users/brendanhoung/Dropbox/time/melb\ unemp%d.png -b 800k unemp.mp4

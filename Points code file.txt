@@ -1,0 +1,103 @@
+points <- read.csv("points.csv")
+> taylorsp <- points[points$student == "taylorsp",]
+> taylorsp
+     student class         activity      date points  checker exceptions
+160 taylorsp 252.2 Data Acquisition 9/23/2014      1 radziwnm           
+> all <- points[points$student == "ALL",]
+> all
+    student class                      activity      date points  checker         exceptions
+2       ALL 252.1                     Install R  9/6/2014      1 radziwnm                   
+3       ALL 252.2                     Install R  9/6/2014      1 radziwnm                   
+4       ALL 252.1                  GitHub Setup  9/9/2014      1 radziwnm crowlekx, sterrejc
+5       ALL 252.2                  GitHub Setup  9/9/2014      1 radziwnm                   
+135     ALL 252.1 Data Management Plan Exercise 9/18/2014      2 radziwnm                   
+136     ALL 252.2 Data Management Plan Exercise 9/18/2014      2 radziwnm                   
+> class <- all[all$class == "252.2",
++ ]
+> class <- all[all$class == "252.2",]
+> class
+    student class                      activity      date points  checker exceptions
+3       ALL 252.2                     Install R  9/6/2014      1 radziwnm           
+5       ALL 252.2                  GitHub Setup  9/9/2014      1 radziwnm           
+136     ALL 252.2 Data Management Plan Exercise 9/18/2014      2 radziwnm           
+> taylosp
+Error: object 'taylosp' not found
+> taylorsp
+     student class         activity      date points  checker exceptions
+160 taylorsp 252.2 Data Acquisition 9/23/2014      1 radziwnm           
+> class
+    student class                      activity      date points  checker exceptions
+3       ALL 252.2                     Install R  9/6/2014      1 radziwnm           
+5       ALL 252.2                  GitHub Setup  9/9/2014      1 radziwnm           
+136     ALL 252.2 Data Management Plan Exercise 9/18/2014      2 radziwnm           
+> taylorsp
+     student class         activity      date points  checker exceptions
+160 taylorsp 252.2 Data Acquisition 9/23/2014      1 radziwnm           
+> class
+    student class                      activity      date points  checker exceptions
+3       ALL 252.2                     Install R  9/6/2014      1 radziwnm           
+5       ALL 252.2                  GitHub Setup  9/9/2014      1 radziwnm           
+136     ALL 252.2 Data Management Plan Exercise 9/18/2014      2 radziwnm           
+> all
+    student class                      activity      date points  checker         exceptions
+2       ALL 252.1                     Install R  9/6/2014      1 radziwnm                   
+3       ALL 252.2                     Install R  9/6/2014      1 radziwnm                   
+4       ALL 252.1                  GitHub Setup  9/9/2014      1 radziwnm crowlekx, sterrejc
+5       ALL 252.2                  GitHub Setup  9/9/2014      1 radziwnm                   
+135     ALL 252.1 Data Management Plan Exercise 9/18/2014      2 radziwnm                   
+136     ALL 252.2 Data Management Plan Exercise 9/18/2014      2 radziwnm                   
+> class <- all[all$class == "252.2",]
+> class
+    student class                      activity      date points  checker exceptions
+3       ALL 252.2                     Install R  9/6/2014      1 radziwnm           
+5       ALL 252.2                  GitHub Setup  9/9/2014      1 radziwnm           
+136     ALL 252.2 Data Management Plan Exercise 9/18/2014      2 radziwnm           
+> class <- all[all$class == "252.2",all$student=="taylorsp",]
+> class
+data frame with 0 columns and 3 rows
+> class <- all[all$class == "252.2" && all$student=="taylorsp",]
+> class
+[1] student    class      activity   date       points     checker    exceptions
+<0 rows> (or 0-length row.names)
+> class <- c((all[all$class == "252.2",]),(all[all$student=="taylorsp"]))
+> class
+$student
+[1] ALL ALL ALL
+87 Levels: aguilejr ALL ander3ad baderba baile2jd barbernd barneyha bealerjm beller berry6cm bouzahlz bowlesjw brathoag burnetce campbebc carrar chancedc chrispzt clark2jw ... verdilx
+
+$class
+[1] 252.2 252.2 252.2
+
+$activity
+[1] Install R                     GitHub Setup                  Data Management Plan Exercise
+22 Levels: Agent Environment Creating Images Data Acq 1 Data Acq 2 Data Acquisition Data Acquisition 1 Data Acquisition 2 Data Management Plan Exercise GitHub Setup ... Perceptron XOR
+
+$date
+[1] 9/6/2014  9/9/2014  9/18/2014
+Levels: 9/10/2014 9/11/2014 9/15/2014 9/16/2014 9/18/2014 9/22/2014 9/23/2014 9/3/2014 9/5/2014 9/6/2014 9/8/2014 9/9/2014
+
+$points
+[1] 1 1 2
+
+$checker
+[1] radziwnm radziwnm radziwnm
+Levels: cunninaf radziwnm roseph
+
+$exceptions
+[1]   
+Levels:  crowlekx, sterrejc
+
+> taylorsp <- points[points$student == "taylorsp",]
+> taylorsp
+     student class         activity      date points  checker exceptions
+160 taylorsp 252.2 Data Acquisition 9/23/2014      1 radziwnm           
+> all <- points[points$student == "ALL",]
+> all
+    student class                      activity      date points  checker         exceptions
+2       ALL 252.1                     Install R  9/6/2014      1 radziwnm                   
+3       ALL 252.2                     Install R  9/6/2014      1 radziwnm                   
+4       ALL 252.1                  GitHub Setup  9/9/2014      1 radziwnm crowlekx, sterrejc
+5       ALL 252.2                  GitHub Setup  9/9/2014      1 radziwnm                   
+135     ALL 252.1 Data Management Plan Exercise 9/18/2014      2 radziwnm                   
+136     ALL 252.2 Data Management Plan Exercise 9/18/2014      2 radziwnm                   
+> 
